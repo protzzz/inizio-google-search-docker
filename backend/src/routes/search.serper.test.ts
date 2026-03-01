@@ -42,7 +42,7 @@ describe("GET /search", () => {
     expect(res.status).toBe(200);
 
     expect(res.body.query).toBe("adele");
-    expect(res.body.total).toBe(10);
+    expect(res.body.total).toBe(responseBody.organic.length);
     expect(res.body.page).toBe(1);
 
     expect(res.body.results).toEqual([
