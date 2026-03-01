@@ -1,15 +1,7 @@
 <?php
 
-// define("BACKEND_URL", getenv("BACKEND_URL") ?: "http://localhost:3000");
-
-$backendUrl = getenv('BACKEND_URL') ?: '';
-$backendPrivate = getenv('BACKEND_PRIVATE_URL') ?: 'http://backend:3000';
-$backendPublic  = getenv('BACKEND_PUBLIC_URL')  ?: 'http://localhost:3000';
-
-$base = $backendUrl !== '' ? $backendUrl : $backendPrivate;
-$base = rtrim($base, '/');
-
-define('BACKEND_BASE_URL', $base);
+define("BACKEND_PRIVATE_URL", getenv("BACKEND_PRIVATE_URL") ?: "http://backend:3000");
+define("BACKEND_PUBLIC_URL", getenv("BACKEND_PUBLIC_URL") ?: "http://localhost:3000");
 
 
 $query = isset($_GET["q"]) ? trim($_GET["q"]) : "";
@@ -20,7 +12,7 @@ if ($total < 1) $total = 1;
 if ($total > 10) $total = 10;
 if ($start < 1) $start = 1;
 
-$apiUrl = BACKEND_BASE_URL . '/api/search?' . http_build_query([
+$apiUrl = BACKEND_PRIVATE_URL . '/api/search?' . http_build_query([
   'q' => $query,
   'num' => $total,
   'start' => $start,
@@ -50,7 +42,7 @@ if ($query != "") {
   }
 }
 
-$downloadJsonUrl = BACKEND_BASE_URL . '/api/search?' . http_build_query([
+$downloadJsonUrl = BACKEND_PUBLIC_URL . '/api/search?' . http_build_query([
   'q' => $query,
   'num' => $total,
   'start' => $start,
