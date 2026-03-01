@@ -1,29 +1,30 @@
 services:
   backend:
+    image: inizio-backend:dev
     container_name: inizio-backend
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     env_file:
-      - ./backend/.env
+      - .env
     volumes:
-      - ./backend/src:/app/src
+      - ./src:/app/src
     command: npm run dev
 
   frontend:
     image: php:8.3-cli
     container_name: inizio-frontend
     working_dir: /app
-    command: sh -c "php -S 0.0.0.0:8000 -t /app && echo 'Open http://localhost:8000'"
+    command: sh -c "php -S 0.0.0.0:8000 -t /app/frontend && echo 'Open http://localhost:8000'"
     ports:
       - "8000:8000"
     environment:
       BACKEND_PRIVATE_URL: http://backend:3000
       BACKEND_PUBLIC_URL: http://localhost:3000
     volumes:
-      - ./frontend:/app
+      - ../frontend:/app/frontend
     depends_on:
       - backend
 
